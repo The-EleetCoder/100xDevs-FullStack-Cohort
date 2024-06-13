@@ -23,4 +23,8 @@ Thanks to Node.js , Javascript can also be used for “Backend Development”
 In a statically typed language, ex. c++, data types are defined during compile time and cannot change during runtime. This behavior is because of static type checking. In contrast, dynamic typing allows variables to change their data type during runtime just like JavaScript.
 
 ### 5. Single threaded nature of JS
+A single-threaded language is one that can execute only one task at a time. The program will execute the tasks in sequence, and each task must complete before the next task starts. Other languages, like Python or Java, are multi-threaded and can execute multiple tasks simultaneously.
+
+### 6. Simple primitives
+
 

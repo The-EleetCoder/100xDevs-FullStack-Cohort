@@ -101,3 +101,55 @@ function handleReject(reason) {
 
 promise.then(handleResolve, handleReject);
 ```
+
+## 3. async await
+In JavaScript, `async` and `await` are syntactic features introduced in ES2017 (ES8) that provide a way to handle asynchronous operations more elegantly and readably, as compared to using traditional methods like callbacks or promises.
+
+An `async` function is a function that returns a Promise. It allows you to use the await keyword within it, to pause the execution of the function, wait for a Promise to resolve, and then resume execution with the resolved value. Declaring a function as async is done by placing the async keyword before the function declaration.
+
+The `await` keyword can only be used inside an async function. It makes JavaScript wait until the promise is resolved and returns the result. If the Promise is rejected, it throws an error.
+
+Example:
+```js
+async function fetchData() {
+  let response = await fetch('https://api.example.com/data');
+  let data = await response.json();
+  return data;
+}
+```
+
+### Consider an example where you need to fetch user data and then their posts:
+
+Without async and await:
+```js
+function getUserData() {
+  fetch('https://api.example.com/user')
+    .then(response => response.json())
+    .then(user => {
+      fetch(`https://api.example.com/user/${user.id}/posts`)
+        .then(response => response.json())
+        .then(posts => {
+          console.log(posts);
+        });
+    });
+}
+```
+
+With async and await:
+```js
+async function getUserData() {
+  try {
+    const userResponse = await fetch('https://api.example.com/user');
+    const user = await userResponse.json();
+    
+    const postsResponse = await fetch(`https://api.example.com/user/${user.id}/posts`);
+    const posts = await postsResponse.json();
+    
+    console.log(posts);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+```
+
+Hence, async and await make asynchronous code easier to write and understand by using a synchronous-looking syntax. This helps developers avoid deeply nested callbacks (callback hell) and improves error handling in asynchronous operations.

@@ -1,13 +1,11 @@
 # Week 1.5
 
-### In this lecture, we covered these topics:
+## In this lecture, we covered these topics:
 1. Async functions vs sync functions
-2. real use of callbacks
-3. JS Browser architecture
-4. Promises
-5. Async await
+2. Promise
+3. Async await
 
-### 1. Async functions vs sync functions
+## 1. Async functions vs sync functions
 **Asynchronous** is a non-blocking architecture, so the execution of one task isn't dependent on another. Tasks can run simultaneously. Whereas, **Synchronous** is a blocking architecture, so the execution of each operation depends on completing the one before it. Each task requires an answer before moving on to the next iteration.
 
 **Synchronous Javascript**:  
@@ -27,8 +25,7 @@ Hi
 Mayukh
 How are you
 ```
-So as we can see the codes work in a sequence. Every line of code waits for its previous one to get executed first and then it gets executed.
-
+So as we can see, the code works in a sequence. Every line of code wait for its previous one to get executed, and then it gets executed.
 
 **Asynchronous Javascript**:  
 ```js
@@ -53,3 +50,54 @@ At first, as usual, the Hi statement got logged in. As we use browsers to run Ja
 
 ![alt text](./images/image.png)
 
+## 2. Promise
+In JavaScript, a Promise is an object that will produce a single value some time in the future. If the promise is successful, it will produce a resolved value, but if something goes wrong then it will produce a reason why the promise failed
+
+This is how you create a promise :
+```js
+const promise = new Promise((resolve, reject) => {
+  // Condition to resolve or reject the promise
+});
+```
+For example, assume you want a promise to resolve after a timeout of two seconds. You can achieve this by writing it into the parameter of the constructor function.
+
+```js
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Done!"), 2000);
+});
+```
+In promises, resolve is a function with an optional parameter representing the resolved value. Also, reject is a function with an optional parameter representing the reason why the promise failed. In the example above, the resolved value of the promise is the string 'Done!'.
+
+Here is yet another example showing how you can resolve or reject a promise based on the conditions you set. In this example, the outcome of the promise is based on a random number the program generates.
+```js
+const promise = new Promise((resolve, reject) => {
+  const num = Math.random();
+  if (num >= 0.5) {
+    resolve("Promise is fulfilled!");
+  } else {
+    reject("Promise failed!");
+  }
+});
+```
+
+To create a callback for a promise, you need to use the `.then()` method. This method takes in two callback functions. The first function runs if the promise is resolved, while the second function runs if the promise is rejected.
+```js
+const promise = new Promise((resolve, reject) => {
+  const num = Math.random();
+  if (num >= 0.5) {
+    resolve("Promise is fulfilled!");
+  } else {
+    reject("Promise failed!");
+  }
+});
+
+function handleResolve(value) {
+  console.log(value);
+}
+
+function handleReject(reason) {
+  console.error(reason);
+}
+
+promise.then(handleResolve, handleReject);
+```

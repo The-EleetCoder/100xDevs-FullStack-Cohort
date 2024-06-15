@@ -2,9 +2,10 @@ const express = require("express");
 const { join } = require("path");
 
 const app = express();
+app.use(express.json());
 
 // dummy user
-const user = [
+const users = [
   {
     name: "John",
     kidneys: [
@@ -16,18 +17,28 @@ const user = [
 ];
 
 app.get("/", (req, res) => {
-  const johnKidneys = user[0].kidneys;
+  const johnKidneys = users[0].kidneys;
   const kidneyCount = johnKidneys.length;
   const healthyKidneyCount = johnKidneys.filter(
-    (kidney) => (kidney.healthy = true)
+    (kidney) => kidney.healthy == true
   ).length;
   const unhealthyKidneyCount = kidneyCount - healthyKidneyCount;
 
   res.send({
     kidneyCount,
     healthyKidneyCount,
-    unhealthyKidneyCount
-  })
+    unhealthyKidneyCount,
+  });
+});
+
+app.post("/", (req, res) => {
+  const isHealthy = req.body.isHealthy;
+  users[0].kidneys.push({
+    healthy: isHealthy,
+  });
+  res.send({
+    message: "Kidney inserted",
+  });
 });
 
 app.listen(3000, () => {

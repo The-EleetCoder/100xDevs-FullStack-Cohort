@@ -11,3 +11,25 @@ Node.js is a runtime environment that allows you to execute JavaScript code outs
 
 ## What is Bun?
 Node.js is slow (multiple reasons for it). So, Some smart people said they wanted to re-write the JS runtime for the backend and introduced `Bun`. It is a significantly faster runtime. It is written in Zig.
+
+## HTTP Protocol
+The Hypertext Transfer Protocol (HTTP) is a fundamental protocol used for communication on the World Wide Web. It governs how clients (such as web browsers) request resources (like web pages, images, videos) from servers and how servers respond to those requests. Here are the key aspects of the HTTP protocol:
+
+1. **Client-Server Model**: HTTP follows a client-server model where clients (typically web browsers) send requests to servers for resources, and servers respond with the requested resources.
+
+2. **Stateless Protocol**: HTTP is stateless, meaning each request from a client to a server is independent and unrelated to previous requests. This simplifies implementation but requires additional mechanisms like cookies or session tokens to manage stateful interactions.
+
+3. **Request Methods**: HTTP defines several request methods (also known as HTTP verbs) that specify the action to be performed on the resource. The most common methods are:
+    1. **GET**: Requests a representation of the specified resource.
+    2. **POST**: Submits data to be processed to a specified resource.
+    3. **PUT**: Updates a resource.
+    4. **DELETE**: Deletes a specified resource.
+    5. **PATCH**: Applies partial modifications to a resource.
+
+4. **Headers**: HTTP requests and responses include headers that provide additional information about the request or response. Headers can include details like the type of content being sent (Content-Type), the size of the content (Content-Length), caching directives (Cache-Control), and more.
+
+5. **Status Codes**: HTTP responses include status codes that indicate the outcome of the request. Some common status codes are:
+
+    1. 200 OK: The request was successful.
+    2. 404 Not Found: The requested resource could not be found.
+    3. 500 Internal Server Error: The server encountered an unexpected condition.

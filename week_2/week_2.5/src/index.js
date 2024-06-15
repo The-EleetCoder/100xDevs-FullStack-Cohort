@@ -41,6 +41,22 @@ app.post("/", (req, res) => {
   });
 });
 
+app.put("/", (req, res) => {
+  users[0].kidneys.map((kidney) => (kidney.healthy = true));
+  res.send({
+    message: "All Kidneys updated",
+  });
+});
+
+app.delete("/", (req, res) => {
+  users[0].kidneys = users[0].kidneys.filter(
+    (kidney) => kidney.healthy == true
+  );
+  res.send({
+    message: "All unhealthyKidneys removed",
+  });
+});
+
 app.listen(3000, () => {
   console.log("listening on port 3000");
 });

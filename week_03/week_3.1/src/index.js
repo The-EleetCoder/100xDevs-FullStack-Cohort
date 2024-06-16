@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     });
   }
 
-  if (kidneyId !== 1 || kidneyId != 2) {
+  if (kidneyId !== "1" && kidneyId != "2") {
     return res.status(400).json({
       message: "Invalid KidneyId",
     });

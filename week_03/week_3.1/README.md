@@ -73,3 +73,12 @@ app.listen(3000, () => {
   console.log("listening on port 3000");
 });
 ```
+Global Catches 
+```js
+// global catches
+app.use((err,req,res,next)=>{
+  res.json({
+    message: "Sorry, something is up with our server!"
+  })
+})
+```

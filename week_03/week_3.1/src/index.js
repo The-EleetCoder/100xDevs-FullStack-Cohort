@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/health-checkup", (req, res) => {
   const { username, password } = req.headers;
   const kidneyId = req.query.kidneyId;
 

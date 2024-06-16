@@ -73,7 +73,7 @@ app.listen(3000, () => {
   console.log("listening on port 3000");
 });
 ```
-Global Catches 
+Error handling middlewares - Global Catches 
 ```js
 // global catches
 app.use((err,req,res,next)=>{
@@ -81,4 +81,23 @@ app.use((err,req,res,next)=>{
     message: "Sorry, something is up with our server!"
   })
 })
+```
+ZOD - validating input schema
+```js
+app.post("/health-checkup", (req, res) => {
+  const schema = z.array(z.number());
+  const { kidneys } = req.body;
+  const response = schema.safeParse(kidneys);
+
+  if (!response.success) {
+    return res.status(400).json({
+      message: "Check your inputs",
+    });
+  }
+
+  const kidneyLength = kidneys?.length;
+  res.json({
+    message: "You have " + kidneyLength + " kidneys",
+  });
+});
 ```

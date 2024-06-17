@@ -20,3 +20,7 @@ The waiting room is where patients hang out before seeing the doctor. Each patie
 Before a patient sees the doctor, there are some helpers doing important tasks.
 One helper checks if patients have the right paperwork . This is like ensuring everyone is who they say they are (Authentication)
 Another helper does quick health checks – like making sure patients' blood pressure is okay. This is similar to checking if the information coming to the doctor is healthy and makes sense (Input Validation).
+
+<p align='center'>
+<img src='image-1.png'/>
+</p>

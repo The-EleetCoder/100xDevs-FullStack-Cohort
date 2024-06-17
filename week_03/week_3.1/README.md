@@ -158,3 +158,67 @@ const errorHandler = (err, req, res, next) => {
 2. `Consistent Error Handling:` Using a global catch mechanism ensures a consistent approach to error handling throughout the application. You can define how errors are logged, reported, or displayed in one place, making it easier to maintain a uniform user experience.
 
 3. `Fallback Mechanism:` Global catches often serve as a fallback mechanism. If an unexpected error occurs and is not handled locally, the global catch can capture it, preventing the application from crashing and providing an opportunity to log the error for further analysis.
+
+# Input Validation
+Input validation is a crucial aspect of securing your application. It helps ensure that the data received by your server is in the expected format and meets certain criteria. Take for instance a login schema, now instead of passing a username and password in the body, the user can pass in any gibberish and may try to crash the server. Thus, it is our responsibility to ensure that our application logic handles all these input vulnerabilities.
+
+Let's explore two approaches to input validation: the naive way with multiple if-else statements and using the zod library for schema validation.
+ 
+## 1. Naive Way - Multiple If-Else Statements:
+In the naive approach, you manually check each input parameter to ensure it meets your criteria. Here's an example using Express.js:
+```js
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || typeof username !== 'string' || username.length < 3 ||
+      !password || typeof password !== 'string' || password.length < 6) {
+    return res.status(400).json({ error: 'Invalid input.' });
+  }
+
+  // Proceed with authentication logic
+  // ...
+
+  res.json({ success: true });
+});
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+``` 
+In this example, we manually check the username and password fields for their existence, data type, and minimum length. This approach can become cumbersome as the number of input parameters increases, and it may lead to code duplication.
+
+## 2. Using zod Library for Schema Validation:
+`zod` is a TypeScript-first schema declaration and validation library. It provides a concise way to define schemas and validate input data. Here's an example using zod for the same login scenario:
+```js
+const express = require('express');
+const { z } = require('zod');
+const app = express();
+
+app.use(express.json());
+
+const loginSchema = z.object({
+  username: z.string().min(3),
+  password: z.string().min(6),
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    loginSchema.parse({ username, password });
+    // Proceed with authentication logic
+    // ...
+    res.json({ success: true });
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid input.', details: error.errors });
+  }
+});
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+```
+In this example, we define a loginSchema using zod that specifies the expected structure and constraints for the input data. The parse method is then used to validate the input against the schema. If the input is invalid, zod throws an error, and we can handle it appropriately. This approach is more concise and less error-prone compared to the manual if-else checks.

@@ -5,7 +5,7 @@
 In this lecture, Harkirat dives deep into `Middlewares`: behind-the-scenes helpers that tidy up things before your main code does its thing. `Global catches`: safety nets for your code, they catch unexpected issues before they cause chaos. And finally, `Zod`: a library that ensures efficient input validation on your behalf.
 
 <p align='center'>
-<img src='image.png' height='300px'/>
+<img src='./images/image.png' height='300px'/>
 </p>
 
 ## Understanding Middlewares:
@@ -22,7 +22,7 @@ One helper checks if patients have the right paperwork . This is like ensuring e
 Another helper does quick health checks – like making sure patients' blood pressure is okay. This is similar to checking if the information coming to the doctor is healthy and makes sense (Input Validation).
 
 <p align='center'>
-<img src='image-1.png' height='200px'/>
+<img src='./images/image-1.png' height='200px'/>
 </p>
 
 ## Middlewares in JS Context & Problem Statement:

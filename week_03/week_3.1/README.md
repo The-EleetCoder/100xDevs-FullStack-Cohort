@@ -22,5 +22,5 @@ One helper checks if patients have the right paperwork . This is like ensuring e
 Another helper does quick health checks – like making sure patients' blood pressure is okay. This is similar to checking if the information coming to the doctor is healthy and makes sense (Input Validation).
 
 <p align='center'>
-<img src='image-1.png'/>
+<img src='image-1.png' height='200px'/>
 </p>

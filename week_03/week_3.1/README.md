@@ -1,103 +1,22 @@
 # Week 3
 
-MongoDB Atlas connection string for `Practice_01` project under `Harkirat_0-100_cohort` is `mongodb+srv://jaijain1803:8WCx3hnKxkI24nwP@cluster0.i50slka.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+# Middlewares, Global Catches & Zod
 
-PostgreSQL connection string `postgresql://Practice_01_owner:eGAtJ2F0hjRL@ep-long-butterfly-a54yv6pm.us-east-2.aws.neon.tech/Practice_01?sslmode=require`
+In this lecture, Harkirat dives deep into `Middlewares`: behind-the-scenes helpers that tidy up things before your main code does its thing. `Global catches`: safety nets for your code, they catch unexpected issues before they cause chaos. And finally, `Zod`: a library that ensures efficient input validation on your behalf.
 
-Ugly way of doing auth and input checks :
-```js
-const express = require("express");
+<p align='center'>
+<img src='image.png' height='300px'/>
+</p>
 
-const app = express();
-app.use(express.json());
+## Understanding Middlewares:
 
-app.get("/health-checkup", (req, res) => {
-  const { username, password } = req.headers;
-  const kidneyId = req.query.kidneyId;
+**Imagine a Busy Hospital:**  
+Think of a hospital where there's a doctor, patients waiting in line, and a few helpful assistants making sure everything runs smoothly.
 
-  if (username !== "Harkirat" || password !== "1234") {
-    return res.status(400).json({
-      message: "Invalid username or password",
-    });
-  }
-
-  if (kidneyId !== "1" && kidneyId != "2") {
-    return res.status(400).json({
-      message: "Invalid KidneyId",
-    });
-  }
-
-  res.json({
-    message: "Your kidney is healthy!",
-  });
-});
-
-app.listen(3000, () => {
-  console.log("listening on port 3000");
-});
-```
-Good way is to use `middlewares` :
-```js
-const express = require("express");
-
-const app = express();
-app.use(express.json());
-
-const userMiddleware = (req, res, next) => {
-  const { username, password } = req.headers;
-  if (username !== "Harkirat" || password !== "1234") {
-    return res.status(400).json({
-      message: "Invalid username or password",
-    });
-  }
-  next();
-};
-
-const kidneyIdMiddleware = (req, res, next) => {
-  const kidneyId = req.query.kidneyId;
-  if (kidneyId !== "1" && kidneyId != "2") {
-    return res.status(400).json({
-      message: "Invalid KidneyId",
-    });
-  }
-  next();
-};
-
-app.get("/health-checkup", userMiddleware, kidneyIdMiddleware, (req, res) => {
-  res.json({
-    message: "Your kidney is healthy!",
-  });
-});
-
-app.listen(3000, () => {
-  console.log("listening on port 3000");
-});
-```
-Error handling middlewares - Global Catches 
-```js
-// global catches
-app.use((err,req,res,next)=>{
-  res.json({
-    message: "Sorry, something is up with our server!"
-  })
-})
-```
-ZOD - validating input schema
-```js
-app.post("/health-checkup", (req, res) => {
-  const schema = z.array(z.number());
-  const { kidneys } = req.body;
-  const response = schema.safeParse(kidneys);
-
-  if (!response.success) {
-    return res.status(400).json({
-      message: "Check your inputs",
-    });
-  }
-
-  const kidneyLength = kidneys?.length;
-  res.json({
-    message: "You have " + kidneyLength + " kidneys",
-  });
-});
-```
+1. **Doctor's Cabin** `(Application Logic)` : The doctor is like the main brain of our hospital – ready to help patients with their problems.
+2. **Waiting Room** `(Callback Queue)` :
+The waiting room is where patients hang out before seeing the doctor. Each patient has a unique situation.
+3. **Intermediates** `(Middlewares)` :
+Before a patient sees the doctor, there are some helpers doing important tasks.
+One helper checks if patients have the right paperwork . This is like ensuring everyone is who they say they are (Authentication)
+Another helper does quick health checks – like making sure patients' blood pressure is okay. This is similar to checking if the information coming to the doctor is healthy and makes sense (Input Validation).

@@ -1,6 +1,17 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const jwtPassword = "123456";
+
+mongoose.connect(
+  "mongodb+srv://jaijain1803:8WCx3hnKxkI24nwP@cluster0.i50slka.mongodb.net/practiceApp"
+);
+
+const User = mongoose.model("User", {
+  name: String,
+  username: String,
+  password: String,
+});
 
 const app = express();
 app.use(express.json());
@@ -23,23 +34,37 @@ const ALL_USERS = [
   },
 ];
 
-function userExists(username, password) {
-  let userExist = false;
-  ALL_USERS.find((user) => {
-    if (user.username === username && user.password === password) {
-      userExist = true;
-    }
+app.post("/signup", async (req, res) => {
+  const { name, username, password } = req.body;
+
+  const existingUser = await User.findOne({ username: username });
+
+  if (existingUser) {
+    return res.status(400).json({
+      message: "User already exists",
+    });
+  }
+
+  const user = new User({
+    name,
+    username,
+    password,
   });
-  return userExist;
-}
+  user.save();
 
-app.post("/signin", function (req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
+  res.json({
+    message: "User saved successfully",
+    user,
+  });
+});
 
-  if (!userExists(username, password)) {
-    return res.status(403).json({
-      msg: "User doesnt exist in our in memory db",
+app.post("/signin", async (req, res) => {
+  const { username } = req.body;
+
+  const existingUser = await User.findOne({ username });
+  if (!existingUser) {
+    return res.status(400).json({
+      message: "User doesn't exist!",
     });
   }
 
@@ -49,13 +74,14 @@ app.post("/signin", function (req, res) {
   });
 });
 
-app.get("/users", function (req, res) {
+app.get("/users", async function (req, res) {
   const token = req.headers.authorization;
   try {
     const decoded = jwt.verify(token, jwtPassword);
     const username = decoded.username;
-    const otherUsers = ALL_USERS.filter((user) => user.username != username);
-    res.json( otherUsers );
+    const allUsers = await User.find();
+    const otherUsers = allUsers.filter((user) => user.username != username);
+    res.status(200).json(otherUsers);
   } catch (err) {
     return res.status(403).json({
       msg: "Invalid token",

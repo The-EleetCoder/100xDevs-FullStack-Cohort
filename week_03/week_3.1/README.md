@@ -117,23 +117,26 @@ req.body requires middleware like express.json() to parse the request body, espe
 Middleware helps in processing the request at different stages and is essential for tasks like parsing, logging, authentication, and more in a modular and organized way.
 
 ## 3 Ways of Sending Inputs to a Response:
-### 1. Query Parameter:
+
+1. `Query Parameter:`  
 What it is: Like giving specific instructions in the web address.  
 Example: In www.example.com/search?topic=animals, the query parameter is topic with the value animals.  
 Use Case: Good for simple stuff you want everyone to see, like search terms in a URL.
-### 2. Body:
+
+2. `Body:`  
 What it is: Imagine it as the hidden part of a request, carrying more detailed information.  
 Example: When you fill out a form on a website, the details you enter (name, email) go in the body of the request.  
 Use Case: Great for sending lots of information, especially when you're submitting something like a form.
-### 3. Headers:
+
+3. `Headers:`  
 What it is: Extra information attached to the request, kind of like details about a letter.  
 Example: Headers could include things like your identity or the type of data you're sending.  
 Use Case: Perfect for passing along special information that doesn't fit neatly in the URL or body, like who you are or how to handle the data.
 
 Bottom Line:  
-Query Parameters: Simple instructions visible in the web address.  
-Body: Hidden part of the request for more detailed info, great for forms.  
-Headers: Extra details about the request, useful for special information.
+`Query Parameters:` Simple instructions visible in the web address.  
+`Body:` Hidden part of the request for more detailed info, great for forms.  
+`Headers:` Extra details about the request, useful for special information.
  
 # Global Catches:
 It essentially help us the developers give a better error message to the user.
@@ -150,9 +153,9 @@ const errorHandler = (err, req, res, next) => {
 };
 ```
 ## Importance of Global Error Handling:
-### 1. Centralized Handling:
+1. `Centralized Handling:`  
 Global catch blocks allow you to centrally manage and handle errors that occur anywhere in your application. Instead of handling errors at each specific location, you can capture and process them in a centralized location.
-### 2. Consistent Error Handling:
+2. `Consistent Error Handling:`  
 Using a global catch mechanism ensures a consistent approach to error handling throughout the application. You can define how errors are logged, reported, or displayed in one place, making it easier to maintain a uniform user experience.
-### 3. Fallback Mechanism:
+3. `Fallback Mechanism:`  
 Global catches often serve as a fallback mechanism. If an unexpected error occurs and is not handled locally, the global catch can capture it, preventing the application from crashing and providing an opportunity to log the error for further analysis.

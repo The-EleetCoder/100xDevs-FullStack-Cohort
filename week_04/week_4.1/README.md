@@ -59,3 +59,59 @@ Example Using All Three:
   elementByQuery.style.backgroundColor = 'yellow';
 </script>
 ```
+
+## Understanding Debouncing
+`Debouncing` is a programming practice used to ensure that time-consuming tasks do not fire so often, making them more efficient. In the context of onInput events, debouncing is often applied to delay the execution of certain actions (e.g., sending requests) until after a user has stopped typing for a specific duration.
+
+Implementation:  
+The following example demonstrates debouncing in the `onInput` event to delay the execution of a function that sends a request based on user input.
+
+```js
+<html>
+  <body>
+    <!-- Input field with onInput event and debouncing -->
+    <input id="textInput" type="text" onInput="debounce(handleInput, 500)" placeholder="Type something...">
+
+    <!-- Display area for the debounced input value -->
+    <p id="displayText"></p>
+
+    <script>
+      // Debounce function to delay the execution of a function
+      function debounce(func, delay) {
+        let timeoutId;
+
+        return function() {
+          // Clear the previous timeout
+          clearTimeout(timeoutId);
+
+          // Set a new timeout
+          timeoutId = setTimeout(() => {
+            func.apply(this, arguments);
+          }, delay);
+        };
+      }
+
+      // Function to handle the debounced onInput event
+      function handleInput() {
+        // Get the input field's value
+        const inputValue = document.getElementById("textInput").value;
+
+        // Display the input value in the paragraph
+        document.getElementById("displayText").innerText = "You typed: " + inputValue;
+
+        // Simulate sending a request (replace with actual AJAX call)
+        console.log("Request sent:", inputValue);
+      }
+    </script>
+  </body>
+</html>
+```
+`Explanation`:  
+The debounce function is a generic debounce implementation that takes a function (func) and a delay time (delay).
+Inside the debounce function, a timeout is set to delay the execution of the provided function (func) by the specified delay time (delay).
+The handleInput function is the actual function to be executed when the onInput event occurs. It simulates sending a request (e.g., an AJAX call) based on user input.
+
+`How it works`:  
+When a user types in the input field, the onInput event triggers the debounce function.
+The debounce function sets a timeout, and if the user continues typing within the specified delay time, the previous timeout is cleared, and a new one is set.
+After the user stops typing for the specified delay, the handleInput function is executed.

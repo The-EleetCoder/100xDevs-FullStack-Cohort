@@ -21,3 +21,41 @@ In JavaScript, the Document refers to the root object of the DOM.
 The DOM (Document Object Model) API is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as a tree of objects; each object represents a part of the page.
 
 The document object provides an entry point to the DOM, and it represents the entire HTML or XML document. Developers can use methods and properties provided by the document object to interact with and manipulate the content of a web page dynamically.
+
+## Manipulating HTML with JS
+The DOM (Document Object Model) allows JavaScript to manipulate the HTML of a web page. 
+
+Imagine the DOM as a tree-like structure that represents your HTML document. Each element in your HTML, like buttons, paragraphs, and images, is a part of this tree. JavaScript can interact with this tree, changing, adding, or removing elements. It's like giving JavaScript the power to update what you see on a webpage.
+
+## Methods to Select Elements
+
+1. `querySelector():` querySelector() is a method that selects the first element that matches a specified CSS selector.
+
+2. `getElementById():` getElementById() is a method that selects a single element by its ID attribute.
+
+3. `getElementsByClassName():` getElementsByClassName() is a method that selects all elements with a specific class name.
+
+All three methods are used to select and manipulate HTML elements. `getElementById()` is specifically for selecting by ID. `getElementsByClassName()` selects by class name, but it returns a collection of elements.
+`querySelector()` is more flexible as it can select by any valid CSS selector and returns the first matching element.
+
+Example Using All Three:
+```js
+<div id="example">This is an example.</div>
+<p class="highlight">This is a highlighted paragraph.</p>
+
+<script>
+  // Using getElementById
+  const elementById = document.getElementById('example');
+  elementById.style.color = 'blue';
+
+  // Using getElementsByClassName
+  const elementsByClass = document.getElementsByClassName('highlight');
+  for (const element of elementsByClass) {
+    element.style.fontWeight = 'bold';
+  }
+
+  // Using querySelector
+  const elementByQuery = document.querySelector('.highlight');
+  elementByQuery.style.backgroundColor = 'yellow';
+</script>
+```
